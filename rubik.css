@@ -5,11 +5,28 @@
 
 
 
+#container {
+	width: 720px;
+	margin: auto;
+	display: block;
+}
+
+
+
+h1 {
+	/* TODO: Style me */
+	font-family: Helvetica;
+	font-size: 32pt;
+	text-shadow: 2pt 2pt 3pt #14C6D6;
+}
+
+
+
 #myveryowncanvas {
 	width: 720px;
 	height: 480px;
 
-	background-color: #20B8F8;
+	padding: 0pt;
 
-	margin: auto;
+	background-color: #20B8F8;
 }
