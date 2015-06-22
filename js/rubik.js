@@ -20,24 +20,38 @@ $(document).ready(function() {
 
 	context.loadShaders({ vertex: 'vertexshader.txt', pixel: 'pixelshader.txt' }).then(function(context) { createRenderer(context, scene, modelview, projection)(); });
 });
+function createAnimator(tick, render) {
+
+	//
+	// NOTE: Animate should not be called directly (invoke it via requestAnimationFrame)
+	var clock = undefined;
+
+	function animate(time) {
+		// TODO: Move scene updates to separate function (âœ“)
+		var dt = (time-(clock || time))*0.001; // Time delta (seconds)
+		tick(dt);                              //
+		render();                              //
+		requestAnimationFrame(animate);        // Schedule the next frame
+		clock = time;                          // 
+	}
+
+	return animate;
+
+}
+
+
 
 function createRenderer(context, scene, modelviewMatrix, projectionMatrix) {
 
 	//
-	var frame = 0;
 
-	var render = function() {
+	var render = function(time) {
 
 		// 
 		console.log('Rendering...');
-		frame++;
 		context.clear(modelviewMatrix, projectionMatrix); // Clear the frame and reset matrices
 
-		/* Draw stuff */
-		scene.map(function(object) { object.mesh.render(modelviewMatrix, projectionMatrix); });;
-
-		/* Schedule the next frame */
-		requestAnimationFrame(render); // TODO: Move this statement
+		scene.map(function(object) { object.mesh.render(modelviewMatrix, projectionMatrix); }); // Draw stuff
 
 	};
 
